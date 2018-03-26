@@ -1,0 +1,23 @@
+import http.client
+import json
+
+cabeceras={'User-Agent':'http-client'}
+num_skip=0#Inicializamos el contador que sumará el numero de medicamentos obtenidos hasta llegar a 100.
+while True:#Incluimos un bucle infinito
+    conexion = http.client.HTTPSConnection("api.fda.gov")
+    #A continuación, se hace una modificación con un skip para hacer conexión con la URL correspondiente a los medicamentos relacionados con las aspirinas, poniendo como límite de busqueda 100, ya que es el máximo permitido.
+    conexion.request("GET", '/drug/label.json?limit=100&skip='+str(num_skip)+'&search=substance_name:"ASPIRIN"', None, cabeceras)#Aqui incluimos la modificación para que nos de la información requerida de 100 medicamentos.
+    respuesta1 = conexion.getresponse()
+    print(respuesta1.status, respuesta1.reason)
+    metadatos = respuesta1.read().decode("utf-8")
+    conexion.close()
+
+    datos = json.loads(metadatos)
+    for e in range(len (datos['results'])):
+        medicamento_info=datos['results'][e]
+        print("El medicamento:",medicamento_info['id'])
+        if (medicamento_info['openfda']):
+            print("Fue fabricado por:",medicamento_info['openfda']['manufacturer_name'][0])
+    if (len(datos['results'])<100):
+        break
+    num_skip=num_skip+100
