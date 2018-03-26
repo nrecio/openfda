@@ -20,4 +20,4 @@ while True:#Incluimos un bucle infinito
             print("Fue fabricado por:",medicamento_info['openfda']['manufacturer_name'][0])
     if (len(datos['results'])<100):
         break
-    num_skip=num_skip+100
+    num_skip=num_skip+100#Este código hace que una vez se llegue a 100, el contador se inicializa, para poder dar la información de todos los medicamentos disponibles y no quedarnos solo con los 100 que nos permite la página.
