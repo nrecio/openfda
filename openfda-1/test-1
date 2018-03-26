@@ -11,7 +11,7 @@ metadatos = respuesta1.read().decode("utf-8")#Descodificamos a utf-8 los datos q
 conexion.close()#Cerramos la conexion con la página de openfda.
 
 datos = json.loads(metadatos)#Aqui tratamos los datos json obtenidos para que sean entendibles.
-medicamento_info=datos['results'][0]#Aqui indexamos la página json de openfda para obtener los resultados que queremos, pero tal y como no lo ofrece la pagina.
+medicamento_info=datos['results'][0]#Aqui indexamos la página json de openfda para obtener los resultados que queremos, teniendo en cueta la estructura que utiliza la página.
 
 print ('El identificador es: ',medicamento_info['id'])#Imprimimos el identificador del medicamento.
 print ('El propósito es : ',medicamento_info['purpose'][0])#Imprimimos la utilidad del medicamento.
