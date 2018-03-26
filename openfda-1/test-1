@@ -18,4 +18,4 @@ print ('El propósito es : ',medicamento_info['purpose'][0])#Imprimimos la utili
 
 print ('Fue fabricado por : ',medicamento_info['openfda']['manufacturer_name'][0])#Imprimimos el fabricante.
 
-#Este programa solo nos devuelve la información solicitada de un medicamento.
+#Este programa solo nos devuelve la información solicitada de un medicamento por defecto, porque no se le pide un numero determinado.
