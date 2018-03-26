@@ -12,8 +12,8 @@ conexion.close()
 
 datos = json.loads(metadatos)
 #A continuación iteramos sobre todos los datos obtenidos de la página e imprimimos por pantalla el identificador de los diez medicamentos solicitados.
-for i in range(len (datos['results'])):
-    medicamento_info=datos['results'][i]
+for e in range(len (datos['results'])):
+    medicamento_info=datos['results'][e]
 
     print ('El identificador es: ',medicamento_info['id'])
 
