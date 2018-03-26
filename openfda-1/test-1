@@ -1,0 +1,21 @@
+import http.client #Nos importamos el cliente por defecto que nos ofrece python.
+import json #Nos importamos la biblioteca json
+
+cabeceras = {"User-Agent" : "http.client"}#Definimos las cabeceras y en ellas el cliente con el que se debe establecer la conexión con la página.
+
+conexion = http.client.HTTPSConnection("api.fda.gov")#Aqui metemos los datos para que establezcamos la conexion de nuestro cliente y la pagina que queremos.
+conexion.request("GET", "/drug/label.json", None, cabeceras)#Aqui damos forma a la solicitud que nuestro cliente hace al servidor openfda, incluimos las cabeceras.
+respuesta1 = conexion.getresponse()#Utilizamos este método del cliente para obtener la respuesta con los datos solicitados.
+print(respuesta1.status, respuesta1.reason)#Imprimimos por pantalla el estado 200 y la razón OK.
+metadatos = respuesta1.read().decode("utf-8")#Descodificamos a utf-8 los datos que solicitados que nos devuelve la pagina y los leemos.
+conexion.close()#Cerramos la conexion con la página de openfda.
+
+datos = json.loads(metadatos)#Aqui tratamos los datos json obtenidos para que sean entendibles.
+medicamento_info=datos['results'][0]#Aqui indexamos la página json de openfda para obtener los resultados que queremos, pero tal y como no lo ofrece la pagina.
+
+print ('El identificador es: ',medicamento_info['id'])#Imprimimos el identificador del medicamento.
+print ('El propósito es : ',medicamento_info['purpose'][0])#Imprimimos la utilidad del medicamento.
+
+print ('Fue fabricado por : ',medicamento_info['openfda']['manufacturer_name'][0])#Imprimimos el fabricante.
+
+#Este programa solo nos devuelve la información solicitada de un medicamento.
