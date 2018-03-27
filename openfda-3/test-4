@@ -1,0 +1,71 @@
+#Vamos a importar todas las librerías que vamos autilizar para el programa.
+import http.server
+import socketserver
+import http.client
+import json
+
+#A continuación definimos el puerto donde se establece la conexión.
+PORT = 9000
+
+#A continuación definimos un método que lleva a cabo el cliente que solicita una lista con el nombre de 10 medicamentos.
+def dame_lista():
+    lista = []
+    cabeceras = {'User-Agent': 'http-client'}
+
+    conexion = http.client.HTTPSConnection("api.fda.gov")#Establecemos conexión con l página web.
+    conexion.request("GET", "/drug/label.json?limit=10", None, cabeceras)#Realizamos la petición con el cliente.
+
+    respuesta1 = conexion.getresponse()#Guardamos los
+    print(respuesta1.status, respuesta1.reason)#Imprimimos por pantalla 200 ok.
+    metadatos = respuesta1.read().decode("utf-8")#Leemos la respuesta y la decodificamos a utf-8, guardando estos metadatos en una variable.
+    conexion.close()#Cerramos conexion
+
+    datos = json.loads(metadatos)
+    for i in range(len(datos['results'])):
+        medicamento_info = datos['results'][i]
+        if (medicamento_info['openfda']):
+            print('Fabricante: ', medicamento_info['openfda']['generic_name'][0])
+            lista.append(medicamento_info['openfda']['generic_name'][0])
+
+    return lista#Te devuelve la lista creada de los 10 medicamentos, este método.
+
+#A continuación creamos una clase que va a ser nuestro servidor, esta clase es una modificación del servidor que trae por defecto python.
+class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
+
+
+    def do_GET(self):#Definimos un método que atiende a las peticiones GET.
+
+        self.send_response(200)#Aqui nos responde OK.
+        #A continuación nuestro servidor crea una página web con el contenido de la lista que nuestro cliente pide.
+        #Y lo guarda en un fichero que devuelve al cliente.
+        self.send_header('Content-type', 'text/html')#El contenido lo envía como texto de contenido en html.
+        self.end_headers()
+        contenido="<html><body style='background-color: lightblue'><h1>NOMBRES GENERICOS DE 10 MEDICAMENTOS:</h2>"
+        lista=dame_lista ()#Aqui llamamos al metodo dame lista de nuestro cliente y lo guardamos en la variable lista.
+        for e in lista:
+            contenido += e+"<br>"
+        contenido+="</body></html>"
+
+        self.wfile.write(bytes(contenido, "utf8"))
+        return
+
+
+Manejador = testHTTPRequestHandler#Creamos un manejador
+
+httpd = socketserver.TCPServer(("", PORT), Manejador)#Se crea una conexión en el puerto indicado, para atender a nuestro cliente antes creado.
+print("serving at port", PORT)#Nos imprime el puerto en el que escucha el servidor.
+try:
+    httpd.serve_forever()#El servidor siempre esta escuchando excepto si el usuario corta la conexión.
+except KeyboardInterrupt:
+    pass
+
+httpd.server_close()#Se cierra el servidor.
+print("")
+print("El servidor ha terminado")
+
+
+
+
+
+
+
