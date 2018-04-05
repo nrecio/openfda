@@ -6,7 +6,7 @@ import json
 #A continuación definimos el puerto donde se establece la conexión.
 PORT = 9000
 
-#A continuación definimos un método que lleva a cabo el cliente que solicita una lista con el nombre de 10 medicamentos.
+#A continuación definimos un método que lleva a cabo el cliente que solicita una lista con el identificador de 10 medicamentos.
 def dame_lista():
     lista = []
     cabeceras = {'User-Agent': 'http-client'}
