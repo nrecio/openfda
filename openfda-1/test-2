@@ -4,17 +4,16 @@ import json
 cabeceras = {"User-Agent" : "http.client"}
 
 conexion = http.client.HTTPSConnection("api.fda.gov")
-conexion.request("GET", "/drug/label.json?limit=10", None, cabeceras)#Aqui incluimos la modificación para que nos de la información requerida de 10 medicamentos.
+conexion.request("GET", "/drug/label.json?limit=10", None, cabeceras)
 respuesta1 = conexion.getresponse()
 print(respuesta1.status, respuesta1.reason)
 metadatos = respuesta1.read().decode("utf-8")
 conexion.close()
 
 datos = json.loads(metadatos)
-#A continuación iteramos sobre todos los datos obtenidos de la página e imprimimos por pantalla el identificador de los diez medicamentos solicitados.
 for e in range(len (datos['results'])):
     medicamento_info=datos['results'][e]
 
-    print ('El identificador es: ',medicamento_info['id'])
+    print ('El identificador del medicamento',e+1, 'es: ',medicamento_info['id'])
 
 #Este programa es una modificación del anterior para que te de el identificador de 10 medicamentos diferentes, no solo uno.
