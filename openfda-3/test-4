@@ -23,7 +23,6 @@ def dame_lista():
     for i in range(len(datos['results'])):
         medicamento_info = datos['results'][i]
         if (medicamento_info['openfda']):
-            print('Fabricante: ', medicamento_info['openfda']['generic_name'][0])
             lista.append(medicamento_info['openfda']['generic_name'][0])
 
     return lista
