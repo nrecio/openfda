@@ -35,15 +35,15 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
     def do_GET(self):#Definimos un método que atiende a las peticiones GET.
 
         self.send_response(200)
-        self.send_header('Content-type', 'text/html')
+        self.send_header('Content-type', 'text/html')#Tipo de información que va a devolver.
         self.end_headers()
         contenido="<html><body style='background-color: lightblue'><h1>NOMBRES GENERICOS DE 10 MEDICAMENTOS:</h2>"
-        lista=dame_lista ()
+        lista=dame_lista ()#Llamo a la función que te devulve la lista de los med.
         for e in lista:
-            contenido += e+"<br>"
+            contenido += e+"<br>"#e es cada uno de los medicamentos de dame lista.
         contenido+="</body></html>"
 
-        self.wfile.write(bytes(contenido, "utf8"))
+        self.wfile.write(bytes(contenido, "utf8"))#Para devolver al cliente la respuesta.
         return
 
 

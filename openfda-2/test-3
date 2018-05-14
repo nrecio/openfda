@@ -19,6 +19,6 @@ while True:
         print("El medicamento:",medicamento_info['id'])
         if (medicamento_info['openfda']):
             print("Fue fabricado por:",medicamento_info['openfda']['manufacturer_name'][0])
-    if (len(datos['results'])<100):
+    if (len(datos['results'])<100):#Para que se rompa el bucle en caso de haber terminado.
         break
     num_skip=num_skip+100#Este código hace que una vez se llegue a 100, el contador se inicializa, para poder dar la información de todos los medicamentos disponibles

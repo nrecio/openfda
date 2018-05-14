@@ -4,17 +4,17 @@ import json
 cabeceras = {"User-Agent" : "http.client"}
 
 conexion = http.client.HTTPSConnection("api.fda.gov")
-conexion.request("GET", "/drug/label.json", None, cabeceras)
+conexion.request("GET", "/drug/label.json", None, cabeceras)#Puerto https 443 el 2 es el recurso.
 respuesta1 = conexion.getresponse()
 print(respuesta1.status, respuesta1.reason)
 metadatos = respuesta1.read().decode("utf-8")
 conexion.close()
 
 datos = json.loads(metadatos)
-medicamento_info=datos['results'][0]
+medicamento_info=datos['results'][0]#clave, lista dentro de la clave.
 
 print ('El identificador es: ',medicamento_info['id'])
-print ('El propósito es : ',medicamento_info['purpose'][0])
+print ('El propósito es : ',medicamento_info['purpose'][0])#Se pone [0] por que puede haber mas de un propósito
 
 print ('Fue fabricado por : ',medicamento_info['openfda']['manufacturer_name'][0])
 
