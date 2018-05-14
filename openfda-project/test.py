@@ -181,7 +181,7 @@ class TestOpenFDA(unittest.TestCase):
         url = 'http://localhost:' + str(self.TEST_PORT)
         url += '/redirect'
         resp = requests.get(url)#respuesta de mi server
-        self.assertEqual(resp.status_code, 301)#te pone un tic verde siempre que el estatus sea el que pone aqui
+        self.assertEqual(resp.status_code, 302)#te pone un tic verde siempre que el estatus sea el que pone aqui
 
     def test_auth(self):
         url = 'http://localhost:' + str(self.TEST_PORT)
