@@ -223,8 +223,8 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):#clase que defi
 
         elif 'redirect' in self.path:#te redirige a la pagina rpincipal, el formulario en nuestro caso.
             print("Rerdirigimos la dirección a la página principal")
-            self.send_error(302)
-            self.send_header('Debes introducir esta nueva url', 'http://localhost:'+str(Puerto))#Te devuelve otra cabecera.
+            self.send_response(302)
+            self.send_header('Location', 'http://localhost:'+str(Puerto))#Te devuelve otra cabecera.
             self.end_headers()
         elif 'secret' in self.path:#si los datos a los que queremos acceder estan restringidos, te devuelve un error 401.
             self.send_error(401)

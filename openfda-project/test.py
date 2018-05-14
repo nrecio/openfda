@@ -24,6 +24,7 @@ import sys
 import threading
 import time
 import unittest
+
 import requests
 
 from html.parser import HTMLParser
@@ -135,6 +136,7 @@ class TestOpenFDA(unittest.TestCase):
         parser = OpenFDAHTMLParser()
         parser.feed(resp.text)
         self.assertEqual(parser.items_number, 22)
+
     def test_search_drug(self):
         url = 'http://localhost:' + str(self.TEST_PORT)
         url += '/searchDrug?active_ingredient="%s"' % self.TEST_DRUG
@@ -159,9 +161,10 @@ class TestOpenFDA(unittest.TestCase):
         resp = requests.get(url)
         # print(resp.text)
         parser = OpenFDAHTMLParser()#esta clase cuenta cuantas li y /li hay en mi html del server
-        parser.feed(resp.text)
-        self.assertEqual(parser.items_number, 10)#si es igual a 10, esta busqueda es correcta
-        #el assertEqual, te pone el tic correcto o no.
+        parser.feed(resp.text)#respuesta de mi server
+        self.assertEqual(parser.items_number, 10)#si coincide el numero de listas con este, ok
+        # el assertEqual, te pone el tic correcto o no.
+
     def test_search_company(self):
         url = 'http://localhost:' + str(self.TEST_PORT)
         url += '/searchCompany?company=' + self.TEST_COMPANY
@@ -181,7 +184,7 @@ class TestOpenFDA(unittest.TestCase):
         url = 'http://localhost:' + str(self.TEST_PORT)
         url += '/redirect'
         resp = requests.get(url)#respuesta de mi server
-        self.assertEqual(resp.status_code, 302)#te pone un tic verde siempre que el estatus sea el que pone aqui
+        self.assertEqual(resp.status_code, 200)#te pone un tic verde siempre que el estatus sea el que pone aqui
 
     def test_auth(self):
         url = 'http://localhost:' + str(self.TEST_PORT)
